@@ -2,6 +2,7 @@ const express = require('express')
 const session = require('express-session')
 const exphbs = require('express-handlebars')
 const methodOverride = require('method-override') // 載入method-override
+const flash = require('connect-flash')
 const routes = require('./routes') // 引用路由器
 const usePassport = require('./config/passport') //要寫在express-session以後
 require('./config/mongoose')
@@ -20,10 +21,13 @@ app.use(session({
   saveUninitialized: true //強制將未初始化的 session 存回 session store。未初始化表示這個 session 是新的而且沒有被修改過，例如未登入的使用者的 session
 }))
 usePassport(app)
+app.use(flash())
 app.use((req, res, next) => {
   console.log(req.user) //觀察用
   res.locals.isAuthenticated = req.isAuthenticated() //把 req.isAuthenticated() 回傳的布林值，交接給 res 使用
   res.locals.user = req.user //把使用者資料交接給 res 使用
+  res.locals.success_msg = req.flash('success_msg') // 設定 success_msg 訊息
+  res.locals.warning_msg = req.flash('warning_msg') // 設定 warning_msg 訊息
   next()
 })
 app.use(express.urlencoded({ extended: true }))
