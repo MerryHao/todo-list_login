@@ -1,12 +1,12 @@
 const express = require('express')
 const session = require('express-session')
-const usePassport = require('./config/passport') //要寫在express-session以後
 const exphbs = require('express-handlebars')
 const methodOverride = require('method-override') // 載入method-override
 const routes = require('./routes') // 引用路由器
+const usePassport = require('./config/passport') //要寫在express-session以後
 require('./config/mongoose')
 const dotenv = require("dotenv");
-const { use } = require('passport')
+//const { use } = require('passport')
 const app = express()
 // 如果在 Heroku 環境則使用 process.env.PORT
 // 否則為本地環境，使用 3000 
