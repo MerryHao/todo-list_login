@@ -17,7 +17,7 @@ router.post('/', (req, res) => {
 router.get('/:id', (req, res) => {
   const userId = req.user._id
   const _id = req.params.id
-  return Todo.findOne({ _id, userId}) //從資料庫查找出資料
+  return Todo.findOne({ _id, userId }) //從資料庫查找出資料
     .lean() //把資料換成單純的JS物件
     .then((todo) => res.render('detail', { todo })) //然後把資料送給前端樣板
     .catch(error => console.log(error)) //如果發生意外，執行錯誤處理
